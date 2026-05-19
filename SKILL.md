@@ -225,9 +225,15 @@ Once iPhone is approved, agent duplicates artboards to **688×917px** (iPad 13" 
 - `paper_update_styles` — resize text, adjust padding to fit new dimensions
 - `paper_move_nodes` — organize on canvas
 
+**Critical:** iPad is wider than iPhone, but not always more spacious for text. A side-by-side layout (visual + text) often produces narrower text columns than the original iPhone layout. Agent must:
+1. Calculate final text container width *before* choosing headline size
+2. Use explicit line breaks for display type (56px+) to avoid widows and orphans
+3. Reduce headline size (52–64px) in side-by-side layouts unless the text column exceeds 330px
+4. Validate each headline wrapping before export (no lines under 4 characters, no weak orphans)
+
 Agent will flag any text overflow or major spacing issues for you to manually tweak.
 
-**Prompt guidance:** Use [references/designer_ipad.txt](references/designer_ipad.txt) to adapt the iPhone layouts for wider iPad screens, maintaining hierarchy and refloating text/elements as needed.
+**Prompt guidance:** Use [references/designer_ipad.txt](references/designer_ipad.txt) to adapt iPhone layouts with container-aware typography. Calculate text column width *after* choosing layout, not before. Use the layout decision matrix and text-fit calculation to avoid orphaned words and awkward wrapping.
 
 ### Stage 6: Export
 Agent calls `paper_export` to generate production PNGs via MCP:

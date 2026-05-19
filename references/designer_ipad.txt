@@ -12,17 +12,51 @@ iPad artboards are wider relative to their height, so a naive stretch will fail.
 3. **Rename:** call rename_nodes to rename clones as `ipad_01_hero`, `ipad_02_feature`, etc.
 4. **Resize:** call update_styles on each cloned artboard to set width: 688, height: 917.
 5. **Reflow:** adjust the internal layout:
-   - Increase horizontal padding (688 − 428 = +260 px width to distribute)
-   - If the design is centered text only: keep centered, add side padding
-   - If the design has a device frame + text: place text and frame side-by-side when it improves readability
-   - Headlines may scale up ~10% (e.g., 64 px → 72 px)
-   - Maintain vertical centering; do not anchor everything to the top
+    - **Increase horizontal padding,** but recompute the actual text column width after choosing layout.
+    - **If the design is centered text only:** keep centered, add side padding, and only scale type up if wrapping remains clean.
+    - **If the design has a device frame + text:** place text and frame side-by-side *only* when the headline column remains at least 330px wide, or when explicit line breaks produce strong 2-line typography.
+    - **Do not scale headlines up by default.** In side-by-side layouts, reduce headline size to 52–64px unless the text column is wider than the iPhone source.
+    - **Use explicit line breaks for display headlines.** Avoid automatic wrapping for 56px+ type. Preferred examples: `Understand\nYour Moods`, `Progress,\nMade Visible`, `Your Year,\nBlooming`.
+    - **Reject any headline layout with a final line under 4 characters**, a single-letter/digit orphan, or a weak orphan word.
+    - Maintain vertical centering; do not anchor everything to the top
+
+## Layout decision matrix
+
+Before choosing a layout, consider headline length and word complexity:
+
+| Headline Type | Recommended iPad Layout |
+|---|---|
+| 1–2 short words | Side-by-side, large headline allowed |
+| 3–4 words with short words | Side-by-side with explicit line breaks |
+| 3–4 words with long words | Stacked or wider text column |
+| Includes punctuation or comma | Use intentional break after punctuation |
+| Any line would be <4 chars | Reduce font or change layout |
+
+## Text-fit calculation (required before finalizing)
+
+**Before writing iPad layouts, estimate headline fit:**
+
+```
+availableTextWidth / headlineFontSize = fit ratio
+```
+
+For marketing display type:
+- Avoid lines with fewer than 4 visible characters
+- Avoid single-word final lines when the word is shorter than 5 characters (orphans)
+- If this happens: reduce font size, widen the text column, or add intentional line breaks
+
+**Example calculation:**
+- iPhone headline: 72px × ~350px container = fits 5–6 words
+- iPad side-by-side: 280px container ÷ 72px font = ~3.9 characters per line max
+- **Result:** reduce to 56–64px, or recompose layout
 
 ## Layout rules
 - **Do not stretch.** Recompose.
-- **Use the width.** Side-by-side layouts often work better on iPad.
-- **Text reflow:** check that headlines do not break awkwardly at 688 px.
+- **iPad is wider but not always more spacious.** A two-column iPad layout can give text less width than the original iPhone layout. Recompute container sizes before changing type scale.
+- **Use the width strategically.** Side-by-side layouts often work better on iPad, but only if the text container stays reasonable (~330px+).
+- **Text reflow:** calculate final text column width, then choose headlines that fit cleanly.
 - **Safe zone:** keep critical text within 620 × 810 px.
+- **Hierarchy budget:** treat every iPad composition as a hierarchy budget (headline, subhead, visual, brand). If the visual occupies more than 45–50% of horizontal width in a side-by-side layout, headline size must usually decrease or the composition should switch to stacked layout.
 
 ## Post-processing note for the human
 After export, the pipeline runs:
@@ -31,5 +65,20 @@ ffmpeg -i ipad_export.png -vf "scale=2065:2751" -pix_fmt rgb24 ipad_final.png
 ```
 This ensures exact App Store dimensions and strips alpha channels.
 
+## iPad refactor validation checklist
+
+Before finishing iPad refactor, validate these criteria for each `ipad_*` artboard:
+
+- ✓ Each headline has intentional line breaks (or verified clean wrapping)
+- ✓ No title line contains fewer than 4 visible characters
+- ✓ No final headline line is a weak orphan (single short word or digit)
+- ✓ Headline remains visually dominant over subhead and UI visual
+- ✓ Text column is at least 330px for 60px+ type, or type is reduced accordingly
+- ✓ Subhead is no more than 2 lines
+- ✓ Visual module does not crowd the title
+- ✓ Screenshot preview has been checked before export (call `get_screenshot` or inspect text node dimensions)
+
+**Agent responsibility:** Call `get_screenshot` for each `ipad_*` artboard to visually validate wrapping and hierarchy. Do not proceed to export until all criteria pass.
+
 ## Known limitation
-iPad refactors often need 1–2 manual tweaks after the agent pass. Flag any artboard where text reflows poorly or the composition feels unbalanced. The human will spot-fix in Paper Desktop before final export.
+iPad refactors sometimes need 1–2 manual tweaks after the agent pass. Flag any artboard where text reflows poorly, headline wrapping fails validation, or the composition feels unbalanced. The human will spot-fix in Paper Desktop before final export.
