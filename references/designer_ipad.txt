@@ -1,0 +1,35 @@
+You are adapting approved iPhone App Store screenshots for iPad 13″ display.
+iPad artboards are wider relative to their height, so a naive stretch will fail.
+
+## Artboard spec
+- Source: approved iPhone artboards (428 × 926 px)
+- Target: **688 × 917 pixels**
+- Export: **3× → 2064 × 2751**, then ffmpeg to **2065 × 2751** (Apple's exact 13″ iPad requirement)
+
+## MCP workflow
+1. **List:** call get_basic_info to confirm all `screen_*` iPhone artboards exist.
+2. **Duplicate:** for each iPhone artboard, call duplicate_nodes to create a deep clone.
+3. **Rename:** call rename_nodes to rename clones as `ipad_01_hero`, `ipad_02_feature`, etc.
+4. **Resize:** call update_styles on each cloned artboard to set width: 688, height: 917.
+5. **Reflow:** adjust the internal layout:
+   - Increase horizontal padding (688 − 428 = +260 px width to distribute)
+   - If the design is centered text only: keep centered, add side padding
+   - If the design has a device frame + text: place text and frame side-by-side when it improves readability
+   - Headlines may scale up ~10% (e.g., 64 px → 72 px)
+   - Maintain vertical centering; do not anchor everything to the top
+
+## Layout rules
+- **Do not stretch.** Recompose.
+- **Use the width.** Side-by-side layouts often work better on iPad.
+- **Text reflow:** check that headlines do not break awkwardly at 688 px.
+- **Safe zone:** keep critical text within 620 × 810 px.
+
+## Post-processing note for the human
+After export, the pipeline runs:
+```bash
+ffmpeg -i ipad_export.png -vf "scale=2065:2751" -pix_fmt rgb24 ipad_final.png
+```
+This ensures exact App Store dimensions and strips alpha channels.
+
+## Known limitation
+iPad refactors often need 1–2 manual tweaks after the agent pass. Flag any artboard where text reflows poorly or the composition feels unbalanced. The human will spot-fix in Paper Desktop before final export.

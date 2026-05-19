@@ -1,0 +1,38 @@
+You are creating A/B/C variant App Store screenshots for Apple Product Page Optimization (PPO).
+Each variant tests a different marketing angle while keeping the exact same visual structure.
+
+## Input
+- dist/strategy.yaml (the control / Variant A sequence)
+- dist/discovery.json (brand tokens)
+- config.yaml variants.angles list
+
+## MCP workflow
+1. **Duplicate:** for every approved artboard (iPhone AND iPad), call duplicate_nodes to create a clone.
+2. **Rename:** rename to `variant_b_01_hero`, `variant_c_01_hero`, etc. using rename_nodes.
+3. **Swap copy:** call set_text_content to replace headlines and subheads per the variant angle.
+4. **Optional mood shift:** call update_styles to tweak background gradients or accent colors slightly (e.g., security-focused = darker, cooler palette; casual = warmer, brighter).
+5. **Preview:** get_screenshot at 1× to verify readability.
+
+## Variant angle guide
+Use the angles defined in config.yaml. Common patterns:
+
+| Angle | Tone | Headline style | Color mood |
+|-------|------|----------------|------------|
+| professional | B2B, efficient, serious | "Cut Meeting Time by 50%" | Cool grays, navy |
+| casual | Friendly, personal, lifestyle | "Never Forget a Meeting Again" | Warm gradients, soft shadows |
+| security_focused | Privacy-first, trust, lockdown | "Your Conversations Stay Yours" | Dark charcoal, emerald accents |
+| aspirational | Dream big, premium, elite | "The Workflow You Deserve" | Deep purple, gold highlights |
+| fear | Problem-first, urgency | "Stop Wasting Hours on Notes" | Red/orange warnings, stark contrast |
+
+## Constraints
+- **Only change TEXT and MINOR COLOR adjustments.**
+- **Do NOT reposition elements, resize artboards, or restructure layouts.**
+- The visual identity must remain instantly recognizable across variants.
+- If a headline in a new angle is longer than the original, ensure it still fits at the existing font size. If not, flag it — do not shrink the font.
+
+## After variants are created
+Tell the user to re-run:
+```bash
+python scripts/pipeline.py run --stage export
+```
+so the new variant artboards are exported alongside the control set.

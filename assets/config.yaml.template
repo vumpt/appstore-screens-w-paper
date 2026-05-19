@@ -1,0 +1,43 @@
+# App Store Screenshots Pipeline Config
+# Copy this file to config.yaml and edit for your app.
+
+app:
+  name: "MyApp"
+  bundle_id: "com.example.myapp"
+  category: "Productivity"
+
+brand:
+  design_system_source: "paper"
+  # Options: "paper" (read from Paper MCP), "folder" (read local CSS/tokens), "none"
+
+screenshots:
+  iphone:
+    artboard: [428, 926]       # px — close to real UI size for agent intuition
+    export_scale: 3            # 3× → 1284 × 2778 (6.5" iPhone)
+    target_px: [1284, 2778]
+
+  ipad:
+    artboard: [688, 917]       # px — 13" iPad Pro aspect ratio
+    export_scale: 3            # 3× → 2064 × 2751
+    target_px: [2065, 2751]    # Apple exact requirement; ffmpeg pads/scales to this
+    ffmpeg_scale: "2065:2751"  # Passed to ffmpeg -vf scale=...
+
+  sequence:
+    # Define the story arc. Each item becomes one screenshot artboard.
+    - feature: "Hero"
+      angle: "curiosity"
+    - feature: "Core Feature 1"
+      angle: "simplicity"
+    - feature: "Core Feature 2"
+      angle: "aspiration"
+    - feature: "Core Feature 3"
+      angle: "social_proof"
+    - feature: "How It Works"
+      angle: "clarity"
+
+variants:
+  enabled: true
+  angles:
+    - "professional"
+    - "casual"
+    - "security_focused"
