@@ -79,7 +79,7 @@ mkdir -p .agents/skills && \
 
 Your agent will:
 1. **Discover** — read your Paper project and codebase to understand your app
-2. **Strategize** — propose a screenshot sequence (you approve or edit)
+2. **Strategize** — discuss your best selling points and pain points, then craft a screenshot sequence (you approve or edit)
 3. **Design** — create iPhone marketing artboards in Paper (you review)
 4. **Refactor** — adapt approved designs for iPad dimensions
 5. **Export** — render production PNGs at exact App Store sizes (1284×2778 and 2065×2751)
@@ -97,7 +97,8 @@ The skill is a set of structured instructions (`SKILL.md` + reference prompts in
 
 - **State is implicit** — progress is tracked by artboard names in Paper (`screen_01`, `ipad_01`, etc.), so you can stop and resume anytime.
 - **Human gates** — the agent pauses at key decision points (strategy approval, design review) so you stay in control.
-- **Marketing, not UI** — the agent is explicitly instructed to design billboard-style slides with huge type and bold whitespace, not app interfaces.
+- **Marketing, not UI** — the agent is explicitly instructed to design billboard-style slides with huge type and bold whitespace, not app interfaces. Less is more: one accent color, one font, 3–4 elements per slide, one clear message.
+- **Readability & attention** — every screenshot passes the grandma test (readable on a tiny screen) and includes at least one scroll-stopping element (emoji, extreme zoom, bold visual).
 
 For full technical details — MCP tools, config schemas, troubleshooting, and per-stage prompting guidance — see `SKILL.md`.
 
