@@ -5,7 +5,7 @@ license: MIT
 compatibility: Requires Paper Desktop with MCP enabled, ffmpeg, and Paper project with existing UI artboards.
 metadata:
   author: Lachlan Glasgow
-  version: "0.5.0"
+  version: "0.6.0"
   hermes:
     tags: [creative, app-store, marketing, paper, design, screenshots]
     related_skills: []
@@ -183,6 +183,14 @@ Agent proposes a screenshot sequence:
 - **Subheading** (supporting message)
 - **Feature** being showcased
 - **Visual angle** (technical, emotional, benefit-focused, etc.)
+- **Priority** — first 2–3 slides marked as high priority (most conversion weight)
+
+**Interactive strategy:** The agent should NOT propose a final sequence in one pass. Instead:
+1. Present 2–3 different angle options for the hero slide and ask the user to pick
+2. Discuss the user's top selling points and what their users care about most
+3. Ask about pain points the app solves — this drives better copy than feature lists
+4. Propose a full sequence only after understanding the user's marketing instincts
+5. Let the user iterate on headlines before moving to design
 
 **Human decision:** Approve, edit, or skip to next stage.
 
@@ -195,12 +203,26 @@ Agent creates **428×926px** artboards in Paper (one per screenshot) named `scre
 - `paper_set_text_content` + `paper_update_styles` — headlines, body, CTAs
 - `paper_get_screenshot` — 1x or 2x preview (for your eyes only, not for export)
 
-**Critical design rule:** These are **marketing images, not UI**. Think billboards, not buttons:
-- Font sizes 2-3× typical UI (headlines 48-72px, body 24-36px)
-- HUGE whitespace. Dramatic padding.
-- Bold color, high contrast
-- Minimal text (max 2-3 lines per shot)
-- Single feature per slide
+**Critical design rules:** These are **marketing images, not UI**. Think billboards, not buttons:
+
+- **Less is more:**
+  - One accent color + neutrals. No rainbow palettes.
+  - One sans-serif font (e.g., black weight or SF Pro). No mixing typefaces.
+  - 3–4 elements per image max. Headline, subhead, one visual, maybe one accent.
+  - One clear message per screenshot. Second message = second artboard.
+- **Readability first:**
+  - Font sizes 2-3× typical UI (headlines 56-72px, subheads 28-36px, body 20-24px).
+  - Must be readable at arm's length on a phone. Grandma test: if she would squint, make it bigger or simpler.
+  - High contrast always. No mid-tone backgrounds behind text.
+- **Attention grabbers:**
+  - Every screenshot needs at least one scroll-stopping element: emoji, extreme zoom, bold visual metaphor, or provocative headline.
+  - No purely text-only slides. Every artboard needs a visual hook beyond typography.
+- **Marketing mindset:**
+  - Focus on user pains and how the app solves them. Not feature descriptions.
+  - Treat the first 2 screenshots as your most valuable real estate — strongest hooks, most polish.
+  - App UI is subordinate to the message. Show UI as proof of the headline claim, not as a feature tour.
+- **HUGE whitespace.** Dramatic padding. Let the message breathe.
+- **Minimal text** (max 2-3 lines per shot). Brevity is power.
 
 Agent will ask for your feedback after drafts.
 
@@ -224,6 +246,8 @@ Once iPhone is approved, agent duplicates artboards to **688×917px** (iPad 13" 
 - `paper_duplicate_nodes` — clone all `screen_XX` artboards into new `ipad_XX` artboards
 - `paper_update_styles` — resize text, adjust padding to fit new dimensions
 - `paper_move_nodes` — organize on canvas
+
+**Design principles carry over:** The same less-is-more, readability-first, and attention-grabber rules apply. Do not introduce new colors, fonts, or elements during the refactor. The wider canvas lets you be more expressive, not more informational.
 
 **Critical:** iPad is wider than iPhone, but not always more spacious for text. A side-by-side layout (visual + text) often produces narrower text columns than the original iPhone layout. Agent must:
 1. Calculate final text container width *before* choosing headline size
@@ -310,11 +334,17 @@ If no config exists, the agent infers everything and asks for approval.
 1. **Verify MCP first** — Call `paper_get_basic_info` immediately. If it fails, stop and guide user through MCP setup.
 2. **State is implicit** — No config files needed. Artboard names (`screen_01`, `ipad_01`, etc.) track progress.
 3. **iPhone first, iPad second** — Never try to design both at once. Complete iPhone review before iPad refactor.
-4. **Marketing ≠ UI** — Force large typography (48-72px headlines), massive whitespace, bold colors. Not buttons and menus.
-5. **3x export feels right** — Artboards at 428×926 with 3x export = 1284×2778 matches real iPhone 6.5" closely. Agent gets better spatial intuition.
-6. **Human gates matter** — Stage 2 (Strategy), Stage 4 (Review), and Stage 6 (Variants) are all "pause and ask" moments. Don't auto-proceed.
-7. **Delete before regenerating** — If user wants new screenshots, delete the old `screen_XX` and `ipad_XX` artboards first.
-8. **`paper_export` is production** — Use it for final assets. `paper_get_screenshot` is preview-only; never export with that.
+4. **Marketing ≠ UI** — Force large typography (56-72px headlines), massive whitespace, bold colors. Not buttons and menus.
+5. **Less is more** — One accent color, one font, 3-4 elements per image, one message per slide. Constraints produce stronger work.
+6. **Readability first** — Grandma-on-a-tiny-screen test. If she would squint or be confused, simplify.
+7. **Attention grabbers** — Every screenshot needs one scroll-stopping element (emoji, extreme zoom, bold visual). Boring = invisible.
+8. **Marketing mindset** — Treat screenshots as ads. Focus on user pains and outcomes, not feature descriptions.
+9. **Prioritize first slides** — First 2-3 screenshots carry the most conversion weight. Give them the strongest hooks.
+10. **3x export feels right** — Artboards at 428×926 with 3x export = 1284×2778 matches real iPhone 6.5" closely. Agent gets better spatial intuition.
+11. **Human gates matter** — Stage 2 (Strategy), Stage 4 (Review), and Stage 6 (Variants) are all "pause and ask" moments. Don't auto-proceed.
+12. **Interactive strategy** — Don't propose a final sequence in one pass. Discuss angles, pain points, and marketing instincts with the user first.
+13. **Delete before regenerating** — If user wants new screenshots, delete the old `screen_XX` and `ipad_XX` artboards first.
+14. **`paper_export` is production** — Use it for final assets. `paper_get_screenshot` is preview-only; never export with that.
 
 ## Feedback Loop Guidance for Agents
 

@@ -1,6 +1,27 @@
 You are adapting approved iPhone App Store screenshots for iPad 13″ display.
 iPad artboards are wider relative to their height, so a naive stretch will fail.
 
+## Core Design Principles (same as iPhone — apply here too)
+
+### Less is more
+- **One accent color** plus neutrals. Same palette as iPhone — do not introduce new colors.
+- **One sans-serif font.** Same font as iPhone. No mixing.
+- **3–4 elements per image maximum.** Headline, subhead, one visual, maybe one accent.
+- **One clear message per artboard.** The wider canvas does not mean you add more stuff.
+
+### Readability first
+- Same grandma-on-a-tiny-screen test applies. Even though iPad is larger, App Store browsing still compresses thumbnails.
+- Headlines must remain readable at reduced sizes. If the iPad layout forces smaller type, simplify the copy rather than shrinking below readability.
+
+### Attention grabbers
+- Every iPad artboard needs the same visual hook as its iPhone source.
+- If the iPhone version used an emoji or bold visual, carry it over.
+- Do not strip the scroll-stopping element during the refactor.
+
+### Marketing mindset
+- These are still ads. The wider canvas lets you be more expressive, not more informational.
+- First 2 screenshots still carry the most conversion weight.
+
 ## Artboard spec
 - Source: approved iPhone artboards (428 × 926 px)
 - Target: **688 × 917 pixels**
@@ -77,6 +98,11 @@ Before finishing iPad refactor, validate these criteria for each `ipad_*` artboa
 - ✓ Subhead is no more than 2 lines
 - ✓ Visual module does not crowd the title
 - ✓ Screenshot preview has been checked before export (call `get_screenshot` or inspect text node dimensions)
+- ✓ Same accent color palette as iPhone (no new colors introduced)
+- ✓ Same single font as iPhone (no font mixing)
+- ✓ At most 3–4 elements per artboard (no added clutter from wider canvas)
+- ✓ Attention-grabbing visual element carried over from iPhone version
+- ✓ First 2 artboards (hero, pain_solved) still read as the strongest slides
 
 **Agent responsibility:** Call `get_screenshot` for each `ipad_*` artboard to visually validate wrapping and hierarchy. Do not proceed to export until all criteria pass.
 

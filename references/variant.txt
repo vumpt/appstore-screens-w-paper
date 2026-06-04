@@ -27,8 +27,10 @@ Use the angles defined in config.yaml. Common patterns:
 ## Constraints
 - **Only change TEXT and MINOR COLOR adjustments.**
 - **Do NOT reposition elements, resize artboards, or restructure layouts.**
+- **Preserve all design principles:** less-is-more, readability-first, attention grabbers still apply.
 - The visual identity must remain instantly recognizable across variants.
 - If a headline in a new angle is longer than the original, ensure it still fits at the existing font size. If not, flag it — do not shrink the font.
+- Every variant artboard must still have its attention-grabbing visual element.
 
 ## After variants are created
 Tell the user to re-run:
