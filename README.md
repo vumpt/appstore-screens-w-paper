@@ -1,6 +1,13 @@
-# App Store Screenshots (Paper)
+App Store Screenshots (Paper)
 
 An agent-driven skill for generating production App Store screenshots using [Paper](https://paper.design). Your agent reads your Paper design files, creates marketing artboards, and exports them at the exact resolutions Apple requires — all through a guided, stage-gated workflow.
+
+## Example
+<img width="1456" height="571" alt="image" src="https://github.com/user-attachments/assets/c04a496f-bb8d-4b6b-9179-7a4138d6b9c5" />
+
+This and the invoking the `/appstore-screens-w-paper` skill:
+
+<img width="1456" height="594" alt="image" src="https://github.com/user-attachments/assets/b39f1871-33f2-41f9-ba69-84d6bffbfecc" />
 
 ## Quick Start
 
