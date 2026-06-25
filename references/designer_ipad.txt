@@ -25,7 +25,7 @@ iPad artboards are wider relative to their height, so a naive stretch will fail.
 ## Artboard spec
 - Source: approved iPhone artboards (428 × 926 px)
 - Target: **688 × 917 pixels**
-- Export: **3× → 2064 × 2751**, then ffmpeg to **2065 × 2751** (Apple's exact 13″ iPad requirement)
+- Export: **3× → 2064 × 2752**, then ffmpeg to **2064 × 2752** (Apple's exact 13″ iPad requirement)
 
 ## MCP workflow
 1. **List:** call get_basic_info to confirm all `screen_*` iPhone artboards exist.
@@ -82,7 +82,7 @@ For marketing display type:
 ## Post-processing note for the human
 After export, the pipeline runs:
 ```bash
-ffmpeg -i ipad_export.png -vf "scale=2065:2751" -pix_fmt rgb24 ipad_final.png
+ffmpeg -i ipad_export.png -vf "scale=2064:2752" -pix_fmt rgb24 ipad_final.png
 ```
 This ensures exact App Store dimensions and strips alpha channels.
 

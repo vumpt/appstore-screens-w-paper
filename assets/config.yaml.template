@@ -18,9 +18,9 @@ screenshots:
 
   ipad:
     artboard: [688, 917]       # px — 13" iPad Pro aspect ratio
-    export_scale: 3            # 3× → 2064 × 2751
-    target_px: [2065, 2751]    # Apple exact requirement; ffmpeg pads/scales to this
-    ffmpeg_scale: "2065:2751"  # Passed to ffmpeg -vf scale=...
+    export_scale: 3            # 3× → 2064 × 2752
+    target_px: [2064, 2752]    # Apple exact requirement; ffmpeg pads/scales to this
+    ffmpeg_scale: "2064:2752"  # Passed to ffmpeg -vf scale=...
 
   sequence:
     # Define the story arc. Each item becomes one screenshot artboard.

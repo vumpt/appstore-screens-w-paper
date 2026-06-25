@@ -276,12 +276,12 @@ Agent calls `paper_export` to generate production PNGs via MCP:
 
 Files export to Paper's default location. Agent will also post-process iPad PNGs with ffmpeg to exact App Store dimensions:
 ```bash
-ffmpeg -i ipad_export.png -vf "scale=2065:2751" -pix_fmt rgb24 ipad_export_final.png
+ffmpeg -i ipad_export.png -vf "scale=2064:2752" -pix_fmt rgb24 ipad_export_final.png
 ```
 
 **Final assets:**
 - iPhone: 1284×2778px @ 3x (6.5" variant)
-- iPad: 2065×2751px (13" variant)
+- iPad: 2064×2752px (13" variant)
 
 ### Stage 7: Variants (Optional)
 If you want A/B testing, agent duplicates approved artboards (`variant_a_01`, `variant_b_01`, etc.) and swaps headlines/angles using `paper_set_text_content`. Then re-exports all variants.
@@ -370,7 +370,7 @@ When users provide feedback at any Review stage, **always preserve workflow cont
 | iPad refactor has text overflow | Expected. Manually adjust in Paper after the agent creates it, or ask agent to re-run with smaller font. |
 | `paper_export` succeeds but files are empty | Verify the node IDs match actual artboard names in Paper. Check format/scale are valid enums. |
 | ffmpeg post-process fails | Install ffmpeg: `apt-get install ffmpeg` (Linux) or `brew install ffmpeg` (Mac). |
-| App Store Connect rejects PNGs | Ensure `-pix_fmt rgb24` in ffmpeg command. iPad PNGs must be exactly 2065×2751. iPhone exactly 1284×2778. |
+| App Store Connect rejects PNGs | Ensure `-pix_fmt rgb24` in ffmpeg command. iPad PNGs must be exactly 2064×2752. iPhone exactly 1284×2778. |
 | Agent gets confused by old artboards | Delete the old `screen_XX` and `ipad_XX` artboards before starting new generation. Agent sees all artboards and may mix them up. |
 
 ## Agent Prompting Reference
@@ -381,5 +381,5 @@ When invoking the agent at each stage, use these framing keywords. **Always load
 - **Strategy:** Load [references/copywriter.txt](references/copywriter.txt). "Craft headlines and subheads for each feature angle. Write `dist/strategy.yaml` with the approved sequence definitions."
 - **Design:** Load [references/designer_iphone.txt](references/designer_iphone.txt). "Create iPhone artboards at 428×926 for each approved angle. These are MARKETING images, not UI. Go 2-3× larger than typical UI font sizes."
 - **Refactor:** Load [references/designer_ipad.txt](references/designer_ipad.txt). "Duplicate the approved `screen_XX` artboards into `ipad_XX` at 688×917. Reflow text/spacing for the wider canvas, maintaining hierarchy."
-- **Export:** "Export all `screen_XX` and `ipad_XX` artboards to PNG at 3x scale using `paper_export`. Then post-process iPad PNGs with ffmpeg to 2065×2751."
+- **Export:** "Export all `screen_XX` and `ipad_XX` artboards to PNG at 3x scale using `paper_export`. Then post-process iPad PNGs with ffmpeg to 2064×2752."
 - **Variants:** Load [references/variant.txt](references/variant.txt). "Create Variant B and C with different marketing angles (professional, casual, security-focused), keeping layouts identical."

@@ -34,7 +34,7 @@ Specialized prompts for each stage of the screenshot pipeline. Load these when a
 - Reflow strategy: don't stretch, recompose for wider canvas
 - Layout options: centered text, side-by-side with device frame
 - MCP workflow: duplicate → rename → resize → reflow
-- Post-processing: ffmpeg scaling to 2065×2751 exact compliance
+- Post-processing: ffmpeg scaling to 2064×2752 exact compliance
 
 ### [infer_config.txt](infer_config.txt)
 **Setup: Configuration Inference** — Auto-generate `config.yaml` from multiple sources.

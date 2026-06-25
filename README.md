@@ -89,7 +89,7 @@ Your agent will:
 2. **Strategize** — discuss your best selling points and pain points, then craft a screenshot sequence (you approve or edit)
 3. **Design** — create iPhone marketing artboards in Paper (you review)
 4. **Refactor** — adapt approved designs for iPad dimensions
-5. **Export** — render production PNGs at exact App Store sizes (1284×2778 and 2065×2751)
+5. **Export** — render production PNGs at exact App Store sizes (1284×2778 and 2064×2752)
 6. **(Optional) Variants** — generate A/B/C marketing copy variants for Product Page Optimization
 
 ## What you need
